@@ -24,8 +24,8 @@
             <ChoiceBox prefHeight="54.0" prefWidth="442.0" />
             <Button id="startStopBtn" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="296.0" prefWidth="296.0" text="Start logging" textAlignment="CENTER" wrapText="true" />
          </children>
-      
-                  
+
+
                   </VBox>
    </center>
    <top>
