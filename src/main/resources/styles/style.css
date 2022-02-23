@@ -1,0 +1,45 @@
+.root {
+    /*global background*/
+    -fx-base: #191B1F;
+    -fx-font-size: 24px;
+    -fx-text-color: #BABCC0;
+    -fx-font-family: "Century Gothic";
+
+}
+
+#logoText {
+    -fx-text-fill: white;
+    -fx-font-family: "Courier New";
+    -fx-font-size: 72px;
+}
+
+#startStopBtn {
+    -fx-border-color: #8B2BE4;
+    -fx-border-width: 10;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-background-color: transparent;
+    -fx-font-size: 42px;
+}
+
+.formLabel {
+    -fx-text-fill: #BABCC0;
+    -fx-font-size: 24px;
+}
+
+#activityIndicator {
+    -fx-border-color: #CB3443;
+    -fx-border-width: 1;
+    -fx-border-radius: 6px;
+    -fx-font-size: 24px;
+    -fx-text-fill: #CB3443;
+    -fx-padding: 8px;
+}
+
+.choice-box {
+    -fx-text-color: #BABCC0;
+    -fx-background-radius: 6;
+    -fx-background-color: linear-gradient(to left, #8B2BE4, #4A01DB);
+    -fx-mark-color: white;
+    /*arrow*/
+}
