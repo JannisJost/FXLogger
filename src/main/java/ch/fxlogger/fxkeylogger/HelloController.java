@@ -12,6 +12,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class HelloController implements Initializable {
+    KeyLogger keyLogger;
+
+    public void HelloController(KeyLogger keyLogger){
+        this.keyLogger=keyLogger;
+    }
 
     @FXML
     private Button btnStartOrStopLogging;
@@ -36,5 +41,18 @@ public class HelloController implements Initializable {
     @FXML
     private void closeWindow(MouseEvent event) {
         System.exit(0);
+    }
+
+    @FXML
+    private void BtnStartOrStopLogging(ActionEvent event){
+        int logInWhat;
+        switch (choiceLogType.getValue()){
+            case "File": logInWhat=0;
+                        break;
+            case  "Datebase": logInWhat=1;
+                        break;
+        }
+        keyLogger.setLogInWhat(inSafeWhat);
+
     }
 }
