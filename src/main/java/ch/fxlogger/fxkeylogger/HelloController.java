@@ -45,14 +45,14 @@ public class HelloController implements Initializable {
 
     @FXML
     private void BtnStartOrStopLogging(ActionEvent event){
-        int logInWhat;
+        int logInWhat=0;
         switch (choiceLogType.getValue()){
             case "File": logInWhat=0;
                         break;
             case  "Datebase": logInWhat=1;
                         break;
         }
-        keyLogger.setLogInWhat(inSafeWhat);
+        keyLogger.setLogInWhat(logInWhat);
 
     }
 }
