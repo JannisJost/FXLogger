@@ -37,7 +37,7 @@ public class SQLDatabaseConnection {
     public void createTable() {
         try {
             Statement stmt = null;
-            Connection conn;
+            Connection conn = null;
             conn = DriverManager.getConnection("jdbc:sqlite:keyloggerDB.db");
             System.out.println("Connection Successfully");
             stmt = conn.createStatement();
