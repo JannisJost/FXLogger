@@ -11,6 +11,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import org.jnativehook.keyboard.NativeKeyEvent;
 
 public class HelloController implements Initializable {
     KeyLogger keyLogger;
@@ -54,6 +55,10 @@ public class HelloController implements Initializable {
                         break;
         }
         keyLogger.setLogInWhat(logInWhat);
-
+/*
+        keyLogger.run();
+        keyLogger.write();
+        keyLogger.stop();
+*/
     }
 }
