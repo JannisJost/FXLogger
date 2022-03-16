@@ -14,10 +14,6 @@ import javafx.scene.input.MouseEvent;
 public class HelloController implements Initializable {
     KeyLogger keyLogger;
 
-    public void HelloController(KeyLogger keyLogger){
-        this.keyLogger=keyLogger;
-    }
-
     @FXML
     private Button btnStartOrStopLogging;
     @FXML
@@ -32,6 +28,7 @@ public class HelloController implements Initializable {
         choiceLogType.getItems().add("Database");
         choiceLogType.getItems().add("File");
         choiceLogType.setValue("Database");
+        KeyLogger keyLogger = new KeyLogger();
     }
 
     @FXML
