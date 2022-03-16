@@ -1,5 +1,6 @@
 package ch.fxlogger.fxkeylogger;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 
 public class HelloController implements Initializable {
     KeyLogger keyLogger;
+    HelloApplication helloApplication;
 
     @FXML
     private Button btnStartOrStopLogging;
@@ -29,10 +31,12 @@ public class HelloController implements Initializable {
         choiceLogType.getItems().add("File");
         choiceLogType.setValue("Database");
         KeyLogger keyLogger = new KeyLogger();
+        HelloApplication helloApplication = new HelloApplication();
     }
 
     @FXML
-    private void startOrStopLogging(ActionEvent event) {
+    private void startOrStopLogging(ActionEvent event) throws IOException {
+       helloApplication.timeSheet();
     }
 
     @FXML

@@ -9,8 +9,18 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    private Stage stage;
     @Override
     public void start(Stage stage) throws IOException {
+    this.stage= stage;
+    helloView();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+
+    public void helloView() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("FXLogger");
@@ -18,8 +28,12 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
-    public static void main(String[] args) {
-        launch();
+    public void timeSheet() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("TimeSheet.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("TimeSheet");
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.show();
     }
 }
