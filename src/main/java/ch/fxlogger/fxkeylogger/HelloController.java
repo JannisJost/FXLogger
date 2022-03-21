@@ -16,6 +16,7 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 public class HelloController implements Initializable {
     KeyLogger keyLogger;
     HelloApplication helloApplication;
+    private int loggingState=0;
 
     @FXML
     private Button btnStartOrStopLogging;
@@ -55,10 +56,14 @@ public class HelloController implements Initializable {
                         break;
         }
         keyLogger.setLogInWhat(logInWhat);
-/*
-        keyLogger.run();
-        keyLogger.write();
-        keyLogger.stop();
-*/
+        switch (loggingState){
+            case 0: keyLogger.run();
+                    keyLogger.write();
+                    loggingState=1;
+                    break;
+            case 1: keyLogger.stop();
+                    loggingState=0;
+                    break;
+        }
     }
 }
