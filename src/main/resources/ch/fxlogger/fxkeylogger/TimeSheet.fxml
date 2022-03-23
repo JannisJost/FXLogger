@@ -23,7 +23,7 @@
    <center>
       <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView prefHeight="558.0" prefWidth="726.0">
+            <TableView fx:id="table" prefHeight="558.0" prefWidth="726.0">
               <columns>
                 <TableColumn prefWidth="175.00000303983688" text="Datum" />
                   <TableColumn prefWidth="131.40000915527344" text="Zeit" />
