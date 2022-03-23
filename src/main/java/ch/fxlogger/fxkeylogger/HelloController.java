@@ -52,7 +52,9 @@ public class HelloController implements Initializable {
                 keyLogger.run();
                 keyLogger.write();
                 loggingState = 1;
+
                 break;
+
             case 1:
                 lblActivityIndicator.setText("Inactive");
                 keyLogger.stop();

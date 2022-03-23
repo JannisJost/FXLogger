@@ -10,8 +10,11 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     private Stage stage;
+    private Stage stage1;
     private final KeyLogger keyLogger= new KeyLogger();
     private final HelloController helloController = new HelloController();
+    private TimeSheetController timeSheetController = new TimeSheetController();
+    private int x=1;
     @Override
     public void start(Stage stage) throws IOException {
     this.stage= stage;
@@ -36,17 +39,26 @@ public class HelloApplication extends Application {
         stage.show();
     }
     public void timeSheet() {
-        Stage stage =new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("TimeSheet.fxml"));
-        Scene scene = null;
-        try {
-            scene = new Scene(fxmlLoader.load());
-            stage.setTitle("TimeSheet");
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(x==1){
+            stage1 = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("TimeSheet.fxml"));
+            keyLogger.setTimeSheetController(timeSheetController);
+            fxmlLoader.setController(timeSheetController);
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load());
+                stage1.setTitle("TimeSheet");
+                stage1.setScene(scene);
+                stage1.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            x=0;
+        }else{
+            stage1.close();
+            x=1;
         }
-
     }
+
+
 }

