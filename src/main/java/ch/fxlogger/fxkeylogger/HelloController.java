@@ -15,7 +15,6 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 
 public class HelloController implements Initializable {
     KeyLogger keyLogger;
-    HelloApplication helloApplication;
     private int loggingState=0;
 
     @FXML
@@ -26,19 +25,41 @@ public class HelloController implements Initializable {
     private Label lblActivityIndicator;
     @FXML
     private ImageView btnCloseWindow;
+    private HelloApplication helloApplication;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         choiceLogType.getItems().add("Database");
         choiceLogType.getItems().add("File");
         choiceLogType.setValue("Database");
-        KeyLogger keyLogger = new KeyLogger();
-        HelloApplication helloApplication = new HelloApplication();
+
     }
 
     @FXML
     private void startOrStopLogging(ActionEvent event) throws IOException {
-       helloApplication.timeSheet();
+
+        int logInWhat=0;
+        switch (choiceLogType.getValue()){
+            case "File": logInWhat=0;
+                break;
+            case  "Datebase": logInWhat=1;
+                break;
+        }
+        keyLogger.setLogInWhat(logInWhat);
+        switch (loggingState) {
+            case 0:
+                lblActivityIndicator.setText("Active");
+                keyLogger.run();
+                keyLogger.write();
+                loggingState = 1;
+                break;
+            case 1:
+                lblActivityIndicator.setText("Inactive");
+                keyLogger.stop();
+                loggingState = 0;
+                break;
+        }
+        helloApplication.timeSheet();
     }
 
     @FXML
@@ -46,24 +67,12 @@ public class HelloController implements Initializable {
         System.exit(0);
     }
 
-    @FXML
-    private void BtnStartOrStopLogging(ActionEvent event){
-        int logInWhat=0;
-        switch (choiceLogType.getValue()){
-            case "File": logInWhat=0;
-                        break;
-            case  "Datebase": logInWhat=1;
-                        break;
-        }
-        keyLogger.setLogInWhat(logInWhat);
-        switch (loggingState){
-            case 0: keyLogger.run();
-                    keyLogger.write();
-                    loggingState=1;
-                    break;
-            case 1: keyLogger.stop();
-                    loggingState=0;
-                    break;
-        }
+
+    public void setKeyLogger(KeyLogger keyLogger) {
+        this.keyLogger = keyLogger;
+    }
+
+    public void setHelloApplication(HelloApplication helloApplication) {
+        this.helloApplication = helloApplication;
     }
 }

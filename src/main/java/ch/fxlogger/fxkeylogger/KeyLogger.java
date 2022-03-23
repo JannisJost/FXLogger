@@ -13,11 +13,16 @@ import java.nio.file.StandardOpenOption;
 
 
 public class KeyLogger implements NativeKeyListener {
-
+    private HelloApplication helloApplication;
     private static final Path file = Paths.get("src/main/java/ch/fxlogger/fxkeylogger/keys.txt");
 
     private static String log = "";
     private boolean st, ctrl, alt, capslock;
+
+    public void setHelloApplication(HelloApplication helloApplication) {
+        this.helloApplication = helloApplication;
+    }
+
     private OutputStream os;
     {
         try {
