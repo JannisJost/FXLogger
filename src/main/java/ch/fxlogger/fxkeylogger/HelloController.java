@@ -49,19 +49,25 @@ public class HelloController implements Initializable {
         switch (loggingState) {
             case 0:
                 lblActivityIndicator.setText("Active");
+                btnStartOrStopLogging.setText("Stop"+"\n"+"Logging");
                 keyLogger.run();
-                keyLogger.write();
+                keyLogger.setLogInWhat(logInWhat);
                 loggingState = 1;
-
                 break;
-
             case 1:
+                keyLogger.write();
                 lblActivityIndicator.setText("Inactive");
-                keyLogger.stop();
+                btnStartOrStopLogging.setText("Start"+"\n"+"Logging");
                 loggingState = 0;
+                keyLogger.stop();
+
+                helloApplication.closeTimesheet();
                 break;
         }
-        helloApplication.timeSheet();
+        if(loggingState==1){
+            helloApplication.timeSheet();
+        }
+
     }
 
     @FXML

@@ -7,24 +7,25 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.Time;
 
 public class HelloApplication extends Application {
-    private Stage stage;
-    private Stage stage1;
-    private final KeyLogger keyLogger= new KeyLogger();
+    private final KeyLogger keyLogger = new KeyLogger();
     private final HelloController helloController = new HelloController();
     private TimeSheetController timeSheetController = new TimeSheetController();
-    private int x=1;
-    @Override
-    public void start(Stage stage) throws IOException {
-    this.stage= stage;
-    keyLogger.setHelloApplication(this);
-
-    helloView();
-    }
+    private Stage stage;
+    private Stage stage1;
 
     public static void main(String[] args) {
         launch();
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+        this.stage = stage;
+        keyLogger.setHelloApplication(this);
+
+        helloView();
     }
 
     public void helloView() throws IOException {
@@ -38,27 +39,25 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
     public void timeSheet() {
-        if(x==1){
-            stage1 = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("TimeSheet.fxml"));
-            keyLogger.setTimeSheetController(timeSheetController);
-            fxmlLoader.setController(timeSheetController);
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load());
-                stage1.setTitle("TimeSheet");
-                stage1.setScene(scene);
-                stage1.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            x=0;
-        }else{
-            stage1.close();
-            x=1;
+        stage1 = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("TimeSheet.fxml"));
+        Scene scene = null;
+        keyLogger.setTimeSheetController(timeSheetController);
+        try {
+            scene = new Scene(fxmlLoader.load());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        stage1.setTitle("TimeSheet");
+        stage1.setScene(scene);
+        stage1.show();
+
+
     }
 
-
+    public void closeTimesheet() {
+        stage1.close();
+    }
 }

